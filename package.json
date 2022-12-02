@@ -1,0 +1,26 @@
+{
+  "name": "social-media-app",
+  "version": "1.0.0",
+  "description": "Social Media App (Register - Login - posts - comments)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MohamedAlyAhmed/Social-Media-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MohamedAlyAhmed/Social-Media-App/issues"
+  },
+  "homepage": "https://github.com/MohamedAlyAhmed/Social-Media-App#readme",
+  "devDependencies": {
+    "bootstrap": "^5.2.3"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1"
+  }
+}
