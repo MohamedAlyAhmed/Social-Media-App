@@ -1,8 +1,10 @@
-axios.get("https://tarmeezacademy.com/api/v1/posts").then((res) => {
-  const postTitle = "";
-
-  res.data.data.map((post, index) => {
-    post.title === null ? postTitle : (postTitle = post.title);
+const BASE_URL = "https://tarmeezacademy.com/api/v1";
+//GET POSTS
+axios.get(`${BASE_URL}/posts?limit=5`).then((res) => {
+  let postTitle = "";
+  console.log(res.data.data);
+  res.data.data.map((post) => {
+    post.title === null ? (postTitle = "") : (postTitle = post.title);
     let postPreview = `
                 <div class="card glassy shadow my-4" style="border: none">
                 <div class="card-header text-white">
@@ -29,6 +31,7 @@ axios.get("https://tarmeezacademy.com/api/v1/posts").then((res) => {
 
     document.querySelector("#posts-content").innerHTML += postPreview;
 
+    //ITERATE FOR TAGES
     post.tags.map((tag) => {
       document.getElementById(
         `post-tags-${post.id}`
@@ -36,3 +39,19 @@ axios.get("https://tarmeezacademy.com/api/v1/posts").then((res) => {
     });
   });
 });
+
+//AUTH (LOGIN)
+function LoginBtn() {
+  const userName = document.querySelector("#username-input").value;
+  const password = document.querySelector("#password-input").value;
+
+  axios
+    .post(`${BASE_URL}/login`, {
+      username: userName,
+      password: password,
+    })
+    .then((res) => {
+      console.log(res.data.token);
+      localStorage.setItem("user_name_token", res.data.token);
+    });
+}
