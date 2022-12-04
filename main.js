@@ -3,7 +3,6 @@ axios.get("https://tarmeezacademy.com/api/v1/posts").then((res) => {
 
   res.data.data.map((post, index) => {
     post.title === null ? postTitle : (postTitle = post.title);
-    console.log(post);
     let postPreview = `
                 <div class="card glassy shadow my-4" style="border: none">
                 <div class="card-header text-white">
@@ -22,7 +21,7 @@ axios.get("https://tarmeezacademy.com/api/v1/posts").then((res) => {
                 <hr class="text-light" />
                 <div>
                     <span class="text-light"> (${post.comments_count}) Comments </span>
-                    <span class="text-warning id="post-tags-${post.id}"></span>
+                    <span id="post-tags-${post.id}"></span>
                 </div>
                 </div>
             </div>
@@ -30,17 +29,10 @@ axios.get("https://tarmeezacademy.com/api/v1/posts").then((res) => {
 
     document.querySelector("#posts-content").innerHTML += postPreview;
 
-    // document.getElementById(`post-tags-${post.id}`).innerHTML = "";
-
-    // post.tags.map((e)=>{
-    //     console.log(e.name);
-    //     console.log(post.id);
-    //     let postID = `post-tags-${post.id}`;
-    //     let tagsPreview = `
-    //     <button class="btn btn-success rounded-pill py-0 px-1 mx-1"> ${e.name}</button>
-
-    //      `
-    //     document.getElementById(postID).innerHTML += tagsPreview;
-    // })
+    post.tags.map((tag) => {
+      document.getElementById(
+        `post-tags-${post.id}`
+      ).innerHTML += `<button class="btn btn-success rounded-pill py-0 px-2 mx-1"> #${tag.name}</button>`;
+    });
   });
 });
