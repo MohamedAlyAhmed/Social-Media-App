@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto",'Cairo', sans-serif;
   background: linear-gradient(
     to right,
     #31394d,

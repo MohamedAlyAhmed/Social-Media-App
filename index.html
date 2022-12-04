@@ -16,12 +16,10 @@
     <!-- IMPORT ANIMATE CSS  -->
     <link rel="stylesheet" href="./node_modules/animate.css/animate.min.css" />
     <!-- IMPORT FONTS  -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:wght@100;300;400;500;700;900&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- IMPORT AXIOS  -->
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <!-- START HEADER  -->
@@ -66,33 +64,10 @@
     <!-- START CONTAINER  -->
     <div class="container">
       <div class="d-flex justify-content-center">
-        <div class="col-8">
-            <!-- START POST  -->
-          <div class="card glassy shadow mt-4" style="border: none">
-            <div class="card-header text-white">
-              <img src="./images/profile.png" alt="userpic" width="30" />
-              <span class="ms-2">USER NAME</span>
-            </div>
-            <div class="card-body">
-              <img src="./images/postbg.jpg" alt="" style="max-width: 100%"/>
-              <p class="card-title mt-1 text-white-50">2 min ago</p>
-              <h5 class="card-title mt-2 text-white">
-                Special title For Post
-              </h5>
-              <p class="card-text text-white-50">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Corporis laboriosam et, doloremque assumenda cum natus. Cumque
-                natus ducimus nihil distinctio commodi aliquam aliquid, sint,
-                praesentium ullam eius veritatis beatae tempore?
-              </p>
-              <hr class="text-light" />
-              <div>
-                <span class="text-light"> (7) Comments </span>
-              </div>
-            </div>
-          </div>
+        <div class="col-8" id="posts-content">
+          <!-- START POST  -->
 
-          <div class="card glassy shadow mt-4" style="border: none">
+          <!-- <div class="card glassy shadow mt-4" style="border: none">
             <div class="card-header text-white">
               <img src="./images/profile.png" alt="userpic" width="30" />
               <span class="ms-2">USER NAME</span>
@@ -114,35 +89,13 @@
                 <span class="text-light"> (7) Comments </span>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <div class="card glassy shadow mt-4" style="border: none">
-            <div class="card-header text-white">
-              <img src="./images/profile.png" alt="userpic" width="30" />
-              <span class="ms-2">USER NAME</span>
-            </div>
-            <div class="card-body">
-              <img src="./images/postbg.jpg" alt="" style="max-width: 100%"/>
-              <p class="card-title mt-1 text-white-50">2 min ago</p>
-              <h5 class="card-title mt-2 text-white">
-                Special title For Post
-              </h5>
-              <p class="card-text text-white-50">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Corporis laboriosam et, doloremque assumenda cum natus. Cumque
-                natus ducimus nihil distinctio commodi aliquam aliquid, sint,
-                praesentium ullam eius veritatis beatae tempore?
-              </p>
-              <hr class="text-light" />
-              <div>
-                <span class="text-light"> (7) Comments </span>
-              </div>
-            </div>
-          </div>
           <!-- END POST  -->
         </div>
       </div>
     </div>
     <!-- END CONTAINER  -->
+    <script src="main.js"></script>
   </body>
 </html>
