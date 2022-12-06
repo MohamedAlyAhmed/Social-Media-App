@@ -1,4 +1,5 @@
 const BASE_URL = "https://tarmeezacademy.com/api/v1";
+
 //GET POSTS
 axios.get(`${BASE_URL}/posts?limit=5`).then((res) => {
   let postTitle = "";
@@ -40,7 +41,7 @@ axios.get(`${BASE_URL}/posts?limit=5`).then((res) => {
   });
 });
 
-//AUTH (LOGIN)
+//LOGIN USER
 function LoginBtn() {
   const userName = document.querySelector("#username-input").value;
   const password = document.querySelector("#password-input").value;
@@ -51,7 +52,62 @@ function LoginBtn() {
       password: password,
     })
     .then((res) => {
-      console.log(res.data.token);
-      localStorage.setItem("user_name_token", res.data.token);
+      localStorage.setItem("user-token", res.data.token);
+      localStorage.setItem("user-data", JSON.stringify(res.data.user));
+      RerenderUI();
+      showSuccessAlert();
+      bootstrap.Modal.getInstance(
+        document.querySelector("#login-modal")
+      ).hide();
     });
+}
+
+//RERENDER UI
+function RerenderUI() {
+  const token = localStorage.getItem("user-token");
+  const loginBtn = document.querySelector("#login-btn");
+  const registerBtn = document.querySelector("#register-btn");
+  const logoutBtn = document.querySelector("#logout-btn");
+
+  if (token === null) {
+    console.log("NO USER Logged in");
+    loginBtn.style.display = "flex";
+    registerBtn.style.display = "flex";
+    logoutBtn.style.display = "none";
+  } else {
+    loginBtn.style.display = "none";
+    registerBtn.style.display = "none";
+    logoutBtn.style.display = "flex";
+  }
+}
+
+//LOGOUT USER
+function logoutUser() {
+  localStorage.removeItem("user-token");
+  localStorage.removeItem("user-data");
+  RerenderUI();
+  showSuccessAlert();
+}
+
+//ALERT SUCCESS
+function showSuccessAlert() {
+  const alertPlaceholder = document.getElementById("success-alert");
+
+  const alert = (message, type) => {
+    const wrapper = document.createElement("div");
+    wrapper.innerHTML = [
+      `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+      `   <div>${message}</div>`,
+      '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+      "</div>",
+    ].join("");
+    alertPlaceholder.append(wrapper);
+  };
+
+  alert("Nice, you Success !", "success");
+
+  setTimeout(() => {
+    const alertHide = bootstrap.Alert.getOrCreateInstance("#success-alert");
+    alertHide.close();
+  }, 3000);
 }

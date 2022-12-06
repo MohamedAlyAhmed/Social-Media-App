@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: "Roboto",'Cairo', sans-serif;
+  font-family: "Roboto", "Cairo", sans-serif;
   background: linear-gradient(
     to right,
     #31394d,
@@ -43,4 +43,16 @@ body {
 .new-btn-color:hover {
   color: white;
   background: rgba(0, 153, 255, 0.08);
+}
+
+#logout-btn {
+  display: none;
+}
+
+#success-alert {
+  position: fixed;
+  z-index: 9999;
+  width: 30%;
+  bottom: 0;
+  right: 0;
 }

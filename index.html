@@ -27,7 +27,7 @@
     <script src="./node_modules/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <!-- START HEADER  -->
+    <!-- START NAVBAR  -->
     <nav
       class="navbar navbar-expand-lg navbar-dark glassy container rounded mt-3"
     >
@@ -54,27 +54,39 @@
             </li>
           </ul>
           <div class="d-flex">
-            <button class="new-btn-color me-2 rounded-pill" type="submit">
+            <button
+              class="new-btn-color me-2 rounded-pill"
+              type="submit"
+              id="register-btn"
+            >
               Register
             </button>
             <button
               class="new-btn-color rounded-pill"
               type="submit"
               data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
+              data-bs-target="#login-modal"
+              id="login-btn"
             >
               Login
+            </button>
+            <button
+              class="btn btn-danger me-2 rounded-pill"
+              id="logout-btn"
+              onclick="logoutUser()"
+            >
+              Logout
             </button>
           </div>
         </div>
       </div>
     </nav>
-    <!-- END HEADER  -->
+    <!-- END NAVBAR  -->
 
-    <!-- START MODAL  -->
+    <!-- START MODAL LOGIN  -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="login-modal"
       tabindex="-1"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
@@ -96,7 +108,12 @@
                 <label for="username-input" class="col-form-label"
                   >Username:</label
                 >
-                <input type="text" class="form-control" id="username-input" />
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username-input"
+                  value="mohamedaly"
+                />
               </div>
               <div class="mb-3">
                 <label for="password-input" class="col-form-label"
@@ -106,6 +123,7 @@
                   type="password"
                   class="form-control"
                   id="password-input"
+                  value="123456"
                 />
               </div>
             </form>
@@ -125,7 +143,7 @@
         </div>
       </div>
     </div>
-    <!-- END MODAL  -->
+    <!-- END MODAL LOGIN -->
 
     <!-- START CONTAINER  -->
     <div class="container">
@@ -162,6 +180,10 @@
       </div>
     </div>
     <!-- END CONTAINER  -->
+
+    <!-- START ALERTS  -->
+    <div id="success-alert" class="show fade"></div>
+    <!-- END ALERTS  -->
     <script src="main.js"></script>
   </body>
 </html>
