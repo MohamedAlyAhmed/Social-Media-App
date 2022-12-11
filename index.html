@@ -27,7 +27,7 @@
     <script src="./node_modules/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <!-- START NAVBAR  -->
+    <!-- START NAVBAR -->
     <nav
       class="navbar navbar-expand-lg navbar-dark glassy container rounded mt-3"
     >
@@ -53,11 +53,13 @@
               <a class="nav-link" href="#">Profile</a>
             </li>
           </ul>
-          <div class="d-flex">
+          <div class="d-flex align-items-center">
             <button
               class="new-btn-color me-2 rounded-pill"
               type="submit"
               id="register-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#register-modal"
             >
               Register
             </button>
@@ -70,6 +72,8 @@
             >
               Login
             </button>
+            <div id="user-profile-image" class="mx-1"></div>
+            <div id="user-profile-data" class="mx-2 text-light"></div>
             <button
               class="btn btn-danger me-2 rounded-pill"
               id="logout-btn"
@@ -81,9 +85,9 @@
         </div>
       </div>
     </nav>
-    <!-- END NAVBAR  -->
+    <!-- END NAVBAR -->
 
-    <!-- START MODAL LOGIN  -->
+    <!-- START LOGIN MODAL -->
     <div
       class="modal fade"
       id="login-modal"
@@ -105,24 +109,24 @@
           <div class="modal-body">
             <form>
               <div class="mb-3">
-                <label for="username-input" class="col-form-label"
+                <label for="username-login" class="col-form-label"
                   >Username:</label
                 >
                 <input
                   type="text"
                   class="form-control"
-                  id="username-input"
+                  id="username-login"
                   value="mohamedaly"
                 />
               </div>
               <div class="mb-3">
-                <label for="password-input" class="col-form-label"
+                <label for="password-login" class="col-form-label"
                   >Password:</label
                 >
                 <input
                   type="password"
                   class="form-control"
-                  id="password-input"
+                  id="password-login"
                   value="123456"
                 />
               </div>
@@ -136,14 +140,89 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary" onclick="LoginBtn()">
+            <button type="button" class="btn btn-primary" onclick="LoginUser()">
               login
             </button>
           </div>
         </div>
       </div>
     </div>
-    <!-- END MODAL LOGIN -->
+    <!-- END LOGIN MODAL -->
+
+    <!-- START REGISTER MODAL -->
+    <div
+      class="modal fade"
+      id="register-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Register</h1>
+            <button
+              type="button"
+              class="btn-close bg-light"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="username-register" class="col-form-label"
+                  >Username:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username-register"
+                  value="mohamedaly95"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="password-register" class="col-form-label"
+                  >Password:</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password-register"
+                  value="123456"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="name-register" class="col-form-label">Name:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name-register"
+                  value="Mohamed Aly 95"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="registerUser()"
+            >
+              Register
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END REGISTER MODAL -->
 
     <!-- START CONTAINER  -->
     <div class="container">
@@ -181,9 +260,12 @@
     </div>
     <!-- END CONTAINER  -->
 
-    <!-- START ALERTS  -->
-    <div id="success-alert" class="show fade"></div>
-    <!-- END ALERTS  -->
+    <!-- START ADD POST BUTTON  -->
+    <button class="text-center" id="add-post">+</button>
+    <!-- END ADD POST BUTTON  -->
+    <!-- START ALERTS -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+    <!-- END ALERTS -->
     <script src="main.js"></script>
   </body>
 </html>

@@ -45,7 +45,9 @@ body {
   background: rgba(0, 153, 255, 0.08);
 }
 
-#logout-btn {
+#logout-btn,
+#user-profile-data,
+#user-profile-image {
   display: none;
 }
 
@@ -55,4 +57,24 @@ body {
   width: 30%;
   bottom: 0;
   right: 0;
+}
+
+#add-post {
+  display: none;
+  position: fixed !important;
+  bottom: 2rem;
+  right: 6rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  font-size: 30px;
+  border: none;
+  background-color: #0d6efd;
+  color: white;
+  transition: 0.5s;
+}
+
+#add-post:hover {
+  background-color: #0b5bd3;
+  color: white;
 }
