@@ -1,23 +1,25 @@
-RerenderUI();
 const BASE_URL = "https://tarmeezacademy.com/api/v1";
+getPosts();
+RerenderUI();
 
 //GET POSTS
-axios
-  .get(`${BASE_URL}/posts?limit=20`)
-  .then((res) => {
-    let postTitle = "";
-    let postImage = "./images/postbg.jpg";
-    let userImage = "./images/profile.png";
-    res.data.data.map((post) => {
-      console.log(post.author.profile_image);
-      post.title === null ? (postTitle = "") : (postTitle = post.title);
-      typeof post.image === typeof {}
-        ? (postImage = "./images/postbg.jpg")
-        : (postImage = post.image);
-      typeof post.author.profile_image === typeof {}
-        ? (userImage = "./images/profile.png")
-        : (userImage = post.author.profile_image);
-      let postPreview = `
+function getPosts() {
+  axios
+    .get(`${BASE_URL}/posts?limit=15`)
+    .then((res) => {
+      let postTitle = "";
+      let postImage = "./images/postbg.jpg";
+      let userImage = "./images/profile.png";
+      res.data.data.map((post) => {
+        console.log(post.author.profile_image);
+        post.title === null ? (postTitle = "") : (postTitle = post.title);
+        typeof post.image === typeof {}
+          ? (postImage = "./images/postbg.jpg")
+          : (postImage = post.image);
+        typeof post.author.profile_image === typeof {}
+          ? (userImage = "./images/profile.png")
+          : (userImage = post.author.profile_image);
+        let postPreview = `
                 <div class="card glassy shadow my-4" style="border: none">
                 <div class="card-header text-white">
                 <img src=${userImage} alt="userpic"  class="rounded-circle" style="width: 2.5rem;height:2.5rem; object-fit:fill;"/>
@@ -41,22 +43,22 @@ axios
             </div>
         `;
 
-      document.querySelector("#posts-content").innerHTML += postPreview;
+        document.querySelector("#posts-content").innerHTML += postPreview;
 
-      //ITERATE FOR TAGES
-      post.tags.map((tag) => {
-        document.getElementById(
-          `post-tags-${post.id}`
-        ).innerHTML += `<button class="btn btn-success rounded-pill py-0 px-2 mx-1"> #${tag.name}</button>`;
+        //ITERATE FOR TAGES
+        post.tags.map((tag) => {
+          document.getElementById(
+            `post-tags-${post.id}`
+          ).innerHTML += `<button class="btn btn-success rounded-pill py-0 px-2 mx-1"> #${tag.name}</button>`;
+        });
       });
+    })
+    .catch((error) => {
+      if (error !== null) {
+        showAlert(error.response.data.message, "danger");
+      }
     });
-  })
-  .catch((error) => {
-    if (error !== null) {
-      showAlert(error.response.data.message, "danger");
-    }
-  });
-
+}
 //RERENDER UI
 function RerenderUI() {
   const token = localStorage.getItem("user-token");
@@ -92,7 +94,7 @@ function RerenderUI() {
       : (profileImage = userData.profile_image);
     document.querySelector(
       "#user-profile-image"
-    ).innerHTML = `<img src=${profileImage} alt="profile-image" style="width:2rem;">`;
+    ).innerHTML = `<img src=${profileImage} alt="profile-image" class="rounded-circle" style="width:2rem;">`;
   }
 }
 
@@ -135,13 +137,16 @@ function registerUser() {
   const userName = document.querySelector("#username-register").value;
   const password = document.querySelector("#password-register").value;
   const name = document.querySelector("#name-register").value;
+  const image = document.querySelector("#image-register").files[0];
+
+  const formData = new FormData();
+  formData.append("username", userName);
+  formData.append("password", password);
+  formData.append("name", name);
+  formData.append("image", image);
 
   axios
-    .post(`${BASE_URL}/register`, {
-      username: userName,
-      password: password,
-      name: name,
-    })
+    .post(`${BASE_URL}/register`, formData)
     .then((res) => {
       localStorage.setItem("user-token", res.data.token);
       localStorage.setItem("user-data", JSON.stringify(res.data.user));
@@ -149,6 +154,37 @@ function registerUser() {
       bootstrap.Modal.getInstance(
         document.querySelector("#register-modal")
       ).hide();
+      RerenderUI();
+    })
+    .catch((error) => {
+      if (error !== null) {
+        showAlert(error.response.data.message, "danger");
+      }
+    });
+}
+
+//ADD POST
+function addPost() {
+  const postTitle = document.querySelector("#post-title").value;
+  const postBody = document.querySelector("#post-body").value;
+  const postImage = document.querySelector("#post-image").files[0];
+  const token = localStorage.getItem("user-token");
+
+  let formData = new FormData();
+  formData.append("title", postTitle);
+  formData.append("body", postBody);
+  formData.append("image", postImage);
+
+  axios
+    .post(`${BASE_URL}/posts`, formData, {
+      headers: { authorization: `Bearer ${token}` },
+    })
+    .then((res) => {
+      bootstrap.Modal.getInstance(
+        document.querySelector("#add-post-modal")
+      ).hide();
+      showAlert("Post Created Successfully ♥", "success");
+      getPosts();
       RerenderUI();
     })
     .catch((error) => {

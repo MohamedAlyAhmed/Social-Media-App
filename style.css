@@ -78,3 +78,13 @@ body {
   background-color: #0b5bd3;
   color: white;
 }
+
+#post-body {
+  resize: none;
+  height: 100px;
+}
+
+#post-body:focus {
+  outline: 2px solid #1c375f;
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
