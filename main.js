@@ -1,17 +1,44 @@
 const BASE_URL = "https://tarmeezacademy.com/api/v1";
+const loading = document.querySelector(".spinner-border");
+let currentPage = 1;
+let lastPage = 1;
+
 getPosts();
 RerenderUI();
 
+//INFINITE SCROLLING (PAGENATION)
+window.addEventListener("scroll", () => {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+  let endOfPage = scrollTop + clientHeight >= scrollHeight ? true : false;
+
+  if (endOfPage === true && currentPage < lastPage) {
+    //Show Loading Effect
+    showLoading();
+    //increase page number
+    currentPage += 1;
+    getPosts(currentPage);
+  }
+});
+
+//SHOW LOADING
+function showLoading() {
+  loading.classList.add("show");
+}
+//HIDE LOADING
+function hideLoading() {
+  loading.classList.remove("show");
+}
+
 //GET POSTS
-function getPosts() {
+function getPosts(pageNumber = 1) {
   axios
-    .get(`${BASE_URL}/posts?limit=15`)
+    .get(`${BASE_URL}/posts?limit=5&page=${pageNumber}`)
     .then((res) => {
+      lastPage = res.data.meta.last_page;
       let postTitle = "";
       let postImage = "./images/postbg.jpg";
       let userImage = "./images/profile.png";
       res.data.data.map((post) => {
-        console.log(post.author.profile_image);
         post.title === null ? (postTitle = "") : (postTitle = post.title);
         typeof post.image === typeof {}
           ? (postImage = "./images/postbg.jpg")
@@ -41,6 +68,7 @@ function getPosts() {
                 </div>
                 </div>
             </div>
+            <span id="spinner"></span>
         `;
 
         document.querySelector("#posts-content").innerHTML += postPreview;
@@ -52,6 +80,7 @@ function getPosts() {
           ).innerHTML += `<button class="btn btn-success rounded-pill py-0 px-2 mx-1"> #${tag.name}</button>`;
         });
       });
+      hideLoading();
     })
     .catch((error) => {
       if (error !== null) {

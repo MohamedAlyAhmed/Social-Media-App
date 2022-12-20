@@ -89,6 +89,17 @@ body {
   box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
 }
 
+.spinner-border {
+  position: fixed;
+  bottom: 0;
+  opacity: 0;
+  z-index: 999;
+}
+
+.spinner-border.show {
+  opacity: 1;
+}
+
 @media (max-width: 768px) {
   #add-post {
     right: 1rem;
