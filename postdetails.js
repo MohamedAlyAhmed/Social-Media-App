@@ -3,7 +3,7 @@ const BASE_URL = "https://tarmeezacademy.com/api/v1";
 //Get Post ID Params
 const urlParams = new URLSearchParams(window.location.search);
 const postId = urlParams.get("postId");
-const token = localStorage.getItem("user-token");
+
 
 RerenderUI();
 getPostDetails();
@@ -231,7 +231,7 @@ function getPostDetails() {
 //ADD COMMENT
 function addComment() {
   const commentInput = document.querySelector("#comment-input").value;
-
+  let token = localStorage.getItem("user-token");
   axios
     .post(
       `${BASE_URL}/posts/${postId}/comments`,
