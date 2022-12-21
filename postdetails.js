@@ -16,7 +16,6 @@ function RerenderUI() {
   const logoutBtn = document.querySelector("#logout-btn");
   const userProfileData = document.querySelector("#user-profile-data");
   const userProfileImage = document.querySelector("#user-profile-image");
-  const addPostBtn = document.querySelector("#add-post");
   let profileImage = "./images/profile.png";
 
   if (token === null) {
