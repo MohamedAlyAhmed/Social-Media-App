@@ -1,3 +1,4 @@
+//GLOBAL VARIABLES
 const BASE_URL = "https://tarmeezacademy.com/api/v1";
 const loading = document.querySelector(".spinner-border");
 let currentPage = 1;
@@ -19,7 +20,6 @@ window.addEventListener("scroll", () => {
     getPosts(currentPage);
   }
 });
-
 //SHOW LOADING
 function showLoading() {
   loading.classList.add("show");
@@ -28,7 +28,6 @@ function showLoading() {
 function hideLoading() {
   loading.classList.remove("show");
 }
-
 //GET POSTS
 function getPosts(pageNumber = 1) {
   axios
@@ -47,7 +46,7 @@ function getPosts(pageNumber = 1) {
           ? (userImage = "./images/profile.png")
           : (userImage = post.author.profile_image);
         let postPreview = `
-                <div class="card glassy shadow my-4" style="border: none">
+                <div class="card glassy shadow my-4" style="border: none" onclick="postDetails(${post.id})">
                 <div class="card-header text-white">
                 <img src=${userImage} alt="userpic"  class="rounded-circle" style="width: 2.5rem;height:2.5rem; object-fit:fill;"/>
                 <span class="ms-2">${post.author.name}</span>
@@ -126,7 +125,6 @@ function RerenderUI() {
     ).innerHTML = `<img src=${profileImage} alt="profile-image" class="rounded-circle" style="width:2rem;">`;
   }
 }
-
 //LOGIN USER
 function LoginUser() {
   const userName = document.querySelector("#username-login").value;
@@ -152,7 +150,6 @@ function LoginUser() {
       }
     });
 }
-
 //LOGOUT USER
 function logoutUser() {
   localStorage.removeItem("user-token");
@@ -160,7 +157,6 @@ function logoutUser() {
   showAlert("User logged out Successfully ♥", "success");
   RerenderUI();
 }
-
 //REGISTER USER
 function registerUser() {
   const userName = document.querySelector("#username-register").value;
@@ -191,7 +187,6 @@ function registerUser() {
       }
     });
 }
-
 //ADD POST
 function addPost() {
   const postTitle = document.querySelector("#post-title").value;
@@ -222,7 +217,6 @@ function addPost() {
       }
     });
 }
-
 //ALERT
 function showAlert(customMessage, alertType) {
   const toastContainer = document.querySelector(".toast-container");
@@ -247,4 +241,10 @@ function showAlert(customMessage, alertType) {
   const toastLiveExample = document.getElementById("liveToast");
   const toast = new bootstrap.Toast(toastLiveExample, option);
   toast.show();
+}
+//POST DETAILS
+
+function postDetails(postId) {
+  //alert(postId)
+  window.location = `postdetails.html?postId=${postId}`;
 }

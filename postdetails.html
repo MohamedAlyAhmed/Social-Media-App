@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Social Media App</title>
+    <title>Post Details</title>
     <!-- IMPORT BOOTSTRAP  -->
     <link
       rel="stylesheet"
@@ -45,7 +45,9 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="index.html"
+                >Home</a
+              >
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Profile</a>
@@ -215,111 +217,19 @@
     </div>
     <!-- END REGISTER MODAL -->
 
-    <!-- START ADD POST MODAL -->
-    <div
-      class="modal fade"
-      id="add-post-modal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content bg-dark text-light">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">
-              Create New Post
-            </h1>
-            <button
-              type="button"
-              class="btn-close bg-light"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="post-title" class="col-form-label">Title :</label>
-                <input type="text" class="form-control" id="post-title" />
-              </div>
-              <div class="mb-3">
-                <label for="post-body" class="col-form-label">Post :</label>
-                <textarea id="post-body" class="w-100 rounded"></textarea>
-              </div>
-              <div class="mb-3">
-                <label for="post-image" class="col-form-label">Image :</label>
-                <input type="file" class="form-control" id="post-image" />
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary" onclick="addPost()">
-              Create
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- END ADD POST MODAL -->
-
     <!-- START CONTAINER  -->
     <div class="container">
       <div class="d-flex justify-content-center">
-        <div class="col-8" id="posts-content">
-          <!-- START POST  -->
-
-          <!-- <div class="card glassy shadow mt-4" style="border: none">
-            <div class="card-header text-white">
-              <img src="./images/profile.png" alt="userpic" width="30" />
-              <span class="ms-2">USER NAME</span>
-            </div>
-            <div class="card-body">
-              <img src="./images/postbg.jpg" alt="" style="max-width: 100%"/>
-              <p class="card-title mt-1 text-white-50">2 min ago</p>
-              <h5 class="card-title mt-2 text-white">
-                Special title For Post
-              </h5>
-              <p class="card-text text-white-50">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Corporis laboriosam et, doloremque assumenda cum natus. Cumque
-                natus ducimus nihil distinctio commodi aliquam aliquid, sint,
-                praesentium ullam eius veritatis beatae tempore?
-              </p>
-              <hr class="text-light" />
-              <div>
-                <span class="text-light"> (7) Comments </span>
-              </div>
-            </div>
-          </div> -->
-
-          <!-- END POST  -->
-        </div>
+        <div class="col-8" id="post-content"></div>
         <div class="spinner-border text-light" role="status"></div>
       </div>
     </div>
 
     <!-- END CONTAINER  -->
 
-    <!-- START ADD POST BUTTON  -->
-    <button
-      class="text-center"
-      data-bs-toggle="modal"
-      data-bs-target="#add-post-modal"
-      id="add-post"
-    >
-      +
-    </button>
-    <!-- END ADD POST BUTTON  -->
     <!-- START ALERTS -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
     <!-- END ALERTS -->
-    <script src="main.js"></script>
+    <script src="postdetails.js"></script>
   </body>
 </html>
