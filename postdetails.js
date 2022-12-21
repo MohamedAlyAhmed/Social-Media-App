@@ -1,5 +1,10 @@
 //GLOBAL VARIABLES
 const BASE_URL = "https://tarmeezacademy.com/api/v1";
+//Get Post ID Params
+const urlParams = new URLSearchParams(window.location.search);
+const postId = urlParams.get("postId");
+const token = localStorage.getItem("user-token");
+
 RerenderUI();
 getPostDetails();
 
@@ -133,9 +138,6 @@ function showAlert(customMessage, alertType) {
 
 //Get Post Details By ID
 function getPostDetails() {
-  //Get Post ID Params
-  const urlParams = new URLSearchParams(window.location.search);
-  const postId = urlParams.get("postId");
   //Get Post by ID
   axios
     .get(`${BASE_URL}/posts/${postId}`)
@@ -177,6 +179,11 @@ function getPostDetails() {
 
 
                  </div>
+                 
+                 <div class="input-group mb-3 mt-3">
+                     <input id="comment-input" type="text" class="form-control" placeholder="Write Your Comment ..." aria-label="Write Your Comment ..." aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="addComment()">Send</button>
+                </div>
                   </div>
               </div>
               <span id="spinner"></span>
@@ -214,6 +221,29 @@ function getPostDetails() {
              
              `;
       });
+    })
+    .catch((error) => {
+      if (error !== null) {
+        showAlert(error.response.data.message, "danger");
+      }
+    });
+}
+
+//ADD COMMENT
+function addComment() {
+  const commentInput = document.querySelector("#comment-input").value;
+
+  axios
+    .post(
+      `${BASE_URL}/posts/${postId}/comments`,
+      { body: commentInput },
+      {
+        headers: { authorization: `Bearer ${token}` },
+      }
+    )
+    .then((res) => {
+      showAlert("Comment Created Successfully ♥", "success");
+      getPostDetails();
     })
     .catch((error) => {
       if (error !== null) {
