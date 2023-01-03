@@ -4,7 +4,6 @@ const BASE_URL = "https://tarmeezacademy.com/api/v1";
 const urlParams = new URLSearchParams(window.location.search);
 const postId = urlParams.get("postId");
 
-
 RerenderUI();
 getPostDetails();
 

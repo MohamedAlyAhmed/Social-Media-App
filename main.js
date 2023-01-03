@@ -12,7 +12,7 @@ window.addEventListener("scroll", () => {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
   let endOfPage = scrollTop + clientHeight >= scrollHeight ? true : false;
 
-  if (endOfPage === true && currentPage < lastPage - 5) {
+  if (endOfPage === true && currentPage < lastPage - 20) {
     //Show Loading Effect
     showLoading();
     //increase page number
@@ -24,12 +24,9 @@ window.addEventListener("scroll", () => {
 function showLoading() {
   loading.classList.add("show");
 }
-//HIDE LOADING
-function hideLoading() {
-  loading.classList.remove("show");
-}
 //GET POSTS
 function getPosts(pageNumber = 1) {
+  console.log("GET POST");
   axios
     .get(`${BASE_URL}/posts?limit=5&page=${pageNumber}`)
     .then((res) => {
@@ -38,6 +35,24 @@ function getPosts(pageNumber = 1) {
       let postImage = "./images/postbg.jpg";
       let userImage = "./images/profile.png";
       res.data.data.map((post) => {
+        //EDIT BTN LOGIC & DELETE BTN LOGIC
+        let userId = JSON.parse(localStorage.getItem("user-data")).id;
+        let isMyPost = userId != null && post.author.id == userId;
+        let editBtn = ``;
+        let deleteBtn = ``;
+        if (isMyPost) {
+          editBtn = `<a onclick="editPost('${encodeURIComponent(
+            JSON.stringify(post)
+          )}')" 
+            data-bs-toggle="modal"
+            data-bs-target="#edit-post-modal"
+            id="edit-post" style="float: right;"><i class="fa-regular fa-pen-to-square fa-2x"></i></a>`;
+
+          deleteBtn = `
+            <a onclick="deletePost(${post.id})" 
+            id="delete-post" style="float: right;"><i class="fa-solid fa-trash-can fa-2x ms-4"></i></a>
+            `;
+        }
         post.title === null ? (postTitle = "") : (postTitle = post.title);
         typeof post.image === typeof {}
           ? (postImage = "./images/postbg.jpg")
@@ -46,12 +61,14 @@ function getPosts(pageNumber = 1) {
           ? (userImage = "./images/profile.png")
           : (userImage = post.author.profile_image);
         let postPreview = `
-                <div class="card glassy shadow my-4" style="border: none" onclick="postDetails(${post.id})">
+                <div class="card glassy shadow my-4" style="border: none" >
                 <div class="card-header text-white">
                 <img src=${userImage} alt="userpic"  class="rounded-circle" style="width: 2.5rem;height:2.5rem; object-fit:fill;"/>
                 <span class="ms-2">${post.author.name}</span>
+                ${deleteBtn}
+                ${editBtn}
                 </div>
-                <div class="card-body">
+                <div class="card-body" onclick="postDetails(${post.id})">
                 <img src=${postImage} alt="" style="width: 100%; object-fit:fill;"/>
                 <p class="card-title mt-1 text-white-50">${post.created_at}</p>
                 <h5 class="card-title mt-2 text-white">
@@ -86,6 +103,10 @@ function getPosts(pageNumber = 1) {
         showAlert(error.response.data.message, "danger");
       }
     });
+}
+//HIDE LOADING
+function hideLoading() {
+  loading.classList.remove("show");
 }
 //RERENDER UI
 function RerenderUI() {
@@ -122,7 +143,7 @@ function RerenderUI() {
       : (profileImage = userData.profile_image);
     document.querySelector(
       "#user-profile-image"
-    ).innerHTML = `<img src=${profileImage} alt="profile-image" class="rounded-circle" style="width:2rem;">`;
+    ).innerHTML = `<img src=${profileImage} alt="profile-image" class="rounded-circle" style="width: 2.5rem;height:2.5rem; object-fit:fill;">`;
   }
 }
 //LOGIN USER
@@ -243,8 +264,68 @@ function showAlert(customMessage, alertType) {
   toast.show();
 }
 //POST DETAILS
-
 function postDetails(postId) {
   //alert(postId)
   window.location = `postdetails.html?postId=${postId}`;
+}
+//EDIT POST MODAL
+function editPost(postObject) {
+  let post = JSON.parse(decodeURIComponent(postObject));
+
+  document.getElementById("edit-post-title").value = post.title;
+  document.getElementById("edit-post-body").value = post.body;
+  document.getElementById("edit-post-id").value = post.id;
+  document.querySelector("#edit-post-image").files[0] = post.image;
+}
+//UPDATE POST
+function updatePost() {
+  const postTitle = document.querySelector("#edit-post-title").value;
+  const postBody = document.querySelector("#edit-post-body").value;
+  const postImage = document.querySelector("#edit-post-image").files[0];
+  const postId = document.getElementById("edit-post-id").value;
+  const token = localStorage.getItem("user-token");
+
+  let formData = new FormData();
+  formData.append("title", postTitle);
+  formData.append("body", postBody);
+  formData.append("image", postImage);
+  formData.append("_method", "put");
+
+  axios
+    .post(`${BASE_URL}/posts/${postId}`, formData, {
+      headers: { authorization: `Bearer ${token}` },
+    })
+    .then((res) => {
+      bootstrap.Modal.getInstance(
+        document.querySelector("#edit-post-modal")
+      ).hide();
+      showAlert("Post Updated Successfully ♥", "success");
+      getPosts();
+      RerenderUI();
+    })
+    .catch((error) => {
+      if (error !== null) {
+        showAlert(error.response.data.message, "danger");
+      }
+    });
+}
+//DELETE POST
+function deletePost(postId) {
+  if (confirm("Are you Sure to Delete Post") == true) {
+    const token = localStorage.getItem("user-token");
+    axios
+      .delete(`${BASE_URL}/posts/${postId}`, {
+        headers: { authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        showAlert("Post Deleted Successfully ♥", "success");
+        getPosts();
+        RerenderUI();
+      })
+      .catch((error) => {
+        if (error !== null) {
+          showAlert(error.response.data.message, "danger");
+        }
+      });
+  }
 }
