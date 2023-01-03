@@ -12,7 +12,7 @@ window.addEventListener("scroll", () => {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
   let endOfPage = scrollTop + clientHeight >= scrollHeight ? true : false;
 
-  if (endOfPage === true && currentPage < lastPage - 20) {
+  if (endOfPage === true && currentPage < (lastPage - 50)) {
     //Show Loading Effect
     showLoading();
     //increase page number
