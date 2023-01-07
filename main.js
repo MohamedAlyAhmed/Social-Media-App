@@ -1,6 +1,8 @@
 //GLOBAL VARIABLES
 const BASE_URL = "https://tarmeezacademy.com/api/v1";
 const loading = document.querySelector(".spinner-border");
+const userDataLocal = localStorage.getItem("user-data");
+
 let currentPage = 1;
 let lastPage = 1;
 
@@ -9,10 +11,16 @@ RerenderUI();
 
 //INFINITE SCROLLING (PAGENATION)
 window.addEventListener("scroll", () => {
-  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-  let endOfPage = scrollTop + clientHeight >= scrollHeight ? true : false;
+  //const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-  if (endOfPage === true && currentPage < (lastPage - 50)) {
+  //let endOfPage = scrollTop + clientHeight >= scrollHeight ? true : false;
+
+  let endOfPage =
+    window.innerHeight + window.scrollY >= document.body.scrollHeight
+      ? true
+      : false;
+
+  if (endOfPage === true && currentPage < lastPage) {
     //Show Loading Effect
     showLoading();
     //increase page number
@@ -36,23 +44,28 @@ function getPosts(pageNumber = 1) {
       let userImage = "./images/profile.png";
       res.data.data.map((post) => {
         //EDIT BTN LOGIC & DELETE BTN LOGIC
-        let userId = JSON.parse(localStorage.getItem("user-data")).id;
-        let isMyPost = userId != null && post.author.id == userId;
         let editBtn = ``;
         let deleteBtn = ``;
-        if (isMyPost) {
-          editBtn = `<a onclick="editPost('${encodeURIComponent(
-            JSON.stringify(post)
-          )}')" 
-            data-bs-toggle="modal"
-            data-bs-target="#edit-post-modal"
-            id="edit-post" style="float: right;"><i class="fa-regular fa-pen-to-square fa-2x"></i></a>`;
 
-          deleteBtn = `
-            <a onclick="deletePost(${post.id})" 
-            id="delete-post" style="float: right;"><i class="fa-solid fa-trash-can fa-2x ms-4"></i></a>
-            `;
+        if (userDataLocal !== null && userDataLocal !== undefined) {
+          let userId = JSON.parse(localStorage.getItem("user-data")).id;
+          let isMyPost = userId != null && post.author.id == userId;
+
+          if (isMyPost) {
+            editBtn = `<a onclick="editPost('${encodeURIComponent(
+              JSON.stringify(post)
+            )}')" 
+              data-bs-toggle="modal"
+              data-bs-target="#edit-post-modal"
+              id="edit-post" style="float: right;"><i class="fa-regular fa-pen-to-square fa-2x"></i></a>`;
+
+            deleteBtn = `
+              <a onclick="deletePost(${post.id})" 
+              id="delete-post" style="float: right;"><i class="fa-solid fa-trash-can fa-2x ms-4"></i></a>
+              `;
+          }
         }
+
         post.title === null ? (postTitle = "") : (postTitle = post.title);
         typeof post.image === typeof {}
           ? (postImage = "./images/postbg.jpg")
@@ -63,8 +76,10 @@ function getPosts(pageNumber = 1) {
         let postPreview = `
                 <div class="card glassy shadow my-4" style="border: none" >
                 <div class="card-header text-white">
+                <span class="profile-user" onclick="getUserProfile(${post.author.id})">
                 <img src=${userImage} alt="userpic"  class="rounded-circle" style="width: 2.5rem;height:2.5rem; object-fit:fill;"/>
                 <span class="ms-2">${post.author.name}</span>
+                </span>
                 ${deleteBtn}
                 ${editBtn}
                 </div>
@@ -99,7 +114,7 @@ function getPosts(pageNumber = 1) {
       hideLoading();
     })
     .catch((error) => {
-      if (error !== null) {
+      if (error !== null && error !== undefined) {
         showAlert(error.response.data.message, "danger");
       }
     });
@@ -117,6 +132,7 @@ function RerenderUI() {
   const userProfileData = document.querySelector("#user-profile-data");
   const userProfileImage = document.querySelector("#user-profile-image");
   const addPostBtn = document.querySelector("#add-post");
+  const profileNav = document.querySelector("#profile-nav");
   let profileImage = "./images/profile.png";
 
   if (token === null) {
@@ -126,6 +142,7 @@ function RerenderUI() {
     userProfileData.style.display = "none";
     addPostBtn.style.display = "none";
     userProfileImage.style.display = "none";
+    profileNav.style.display = "none";
   } else {
     loginBtn.style.display = "none";
     registerBtn.style.display = "none";
@@ -133,6 +150,7 @@ function RerenderUI() {
     logoutBtn.style.display = "flex";
     userProfileImage.style.display = "block";
     addPostBtn.style.display = "block";
+    profileNav.style.display = "block";
     const userData = JSON.parse(localStorage.getItem("user-data"));
     document.querySelector(
       "#user-profile-data"
@@ -328,4 +346,9 @@ function deletePost(postId) {
         }
       });
   }
+}
+//GET USER PROFILE DATA
+function getUserProfile(id) {
+  //alert(id)
+  window.location = `profile.html?userid=${id}`;
 }

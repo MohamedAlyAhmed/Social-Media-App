@@ -15,6 +15,7 @@ function RerenderUI() {
   const logoutBtn = document.querySelector("#logout-btn");
   const userProfileData = document.querySelector("#user-profile-data");
   const userProfileImage = document.querySelector("#user-profile-image");
+  const profileNav = document.querySelector("#profile-nav");
   let profileImage = "./images/profile.png";
 
   if (token === null) {
@@ -23,12 +24,14 @@ function RerenderUI() {
     logoutBtn.style.display = "none";
     userProfileData.style.display = "none";
     userProfileImage.style.display = "none";
+    profileNav.style.display = "none";
   } else {
     loginBtn.style.display = "none";
     registerBtn.style.display = "none";
     userProfileData.style.display = "flex";
     logoutBtn.style.display = "flex";
     userProfileImage.style.display = "block";
+    profileNav.style.display = "block";
     const userData = JSON.parse(localStorage.getItem("user-data"));
     document.querySelector(
       "#user-profile-data"

@@ -14,7 +14,13 @@
     <!-- IMPORT CSS  -->
     <link rel="stylesheet" href="./style.css" />
     <!-- IMPORT FONTAWSOME -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <!-- IMPORT FONTS  -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -47,10 +53,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="./index.html"
+                >Home</a
+              >
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Profile</a>
+            <li class="nav-item" id="profile-nav">
+              <a class="nav-link" href="./profile.html">Profile</a>
             </li>
           </ul>
           <div class="d-flex align-items-center">
@@ -271,60 +279,68 @@
     </div>
     <!-- END ADD POST MODAL -->
 
-        <!-- START EDIT POST MODAL -->
-        <div
-        class="modal fade"
-        id="edit-post-modal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content bg-dark text-light">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="post-modal-title">
-                Edit Post
-              </h1>
-              <button
-                type="button"
-                class="btn-close bg-light"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="mb-3">
-                  <label for="edit-post-title" class="col-form-label">Title :</label>
-                  <input type="text" class="form-control" id="edit-post-title" />
-                </div>
-                <div class="mb-3">
-                  <label for="edit-post-body" class="col-form-label">Post :</label>
-                  <textarea id="edit-post-body" class="w-100 rounded"></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="edit-post-image" class="col-form-label">Image :</label>
-                  <input type="file" class="form-control" id="edit-post-image" />
-                  <input type="hidden" class="form-control" id="edit-post-id" />
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary" onclick="updatePost()">
-                Update
-              </button>
-            </div>
+    <!-- START EDIT POST MODAL -->
+    <div
+      class="modal fade"
+      id="edit-post-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="post-modal-title">Edit Post</h1>
+            <button
+              type="button"
+              class="btn-close bg-light"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="edit-post-title" class="col-form-label"
+                  >Title :</label
+                >
+                <input type="text" class="form-control" id="edit-post-title" />
+              </div>
+              <div class="mb-3">
+                <label for="edit-post-body" class="col-form-label"
+                  >Post :</label
+                >
+                <textarea id="edit-post-body" class="w-100 rounded"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="edit-post-image" class="col-form-label"
+                  >Image :</label
+                >
+                <input type="file" class="form-control" id="edit-post-image" />
+                <input type="hidden" class="form-control" id="edit-post-id" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="updatePost()"
+            >
+              Update
+            </button>
           </div>
         </div>
       </div>
-      <!-- END EDIT POST MODAL -->
+    </div>
+    <!-- END EDIT POST MODAL -->
 
     <!-- START CONTAINER  -->
     <div class="container">
@@ -373,8 +389,7 @@
     >
       +
     </button>
-    
-    
+
     <!-- END ADD POST BUTTON  -->
     <!-- START ALERTS -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>

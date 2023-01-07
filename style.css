@@ -114,6 +114,7 @@ body {
 }
 
 #edit-post,
-#delete-post {
+#delete-post,
+.profile-user {
   cursor: pointer;
 }

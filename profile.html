@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Post Details</title>
+    <title>Social Media App</title>
     <!-- IMPORT BOOTSTRAP  -->
     <link
       rel="stylesheet"
@@ -53,7 +53,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html"
+              <a class="nav-link active" aria-current="page" href="./index.html"
                 >Home</a
               >
             </li>
@@ -225,19 +225,179 @@
     </div>
     <!-- END REGISTER MODAL -->
 
+    <!-- START ADD POST MODAL -->
+    <div
+      class="modal fade"
+      id="add-post-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="post-modal-title">
+              Create New Post
+            </h1>
+            <button
+              type="button"
+              class="btn-close bg-light"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="post-title" class="col-form-label">Title :</label>
+                <input type="text" class="form-control" id="post-title" />
+              </div>
+              <div class="mb-3">
+                <label for="post-body" class="col-form-label">Post :</label>
+                <textarea id="post-body" class="w-100 rounded"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="post-image" class="col-form-label">Image :</label>
+                <input type="file" class="form-control" id="post-image" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" onclick="addPost()">
+              Create
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END ADD POST MODAL -->
+
+    <!-- START EDIT POST MODAL -->
+    <div
+      class="modal fade"
+      id="edit-post-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="post-modal-title">Edit Post</h1>
+            <button
+              type="button"
+              class="btn-close bg-light"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="edit-post-title" class="col-form-label"
+                  >Title :</label
+                >
+                <input type="text" class="form-control" id="edit-post-title" />
+              </div>
+              <div class="mb-3">
+                <label for="edit-post-body" class="col-form-label"
+                  >Post :</label
+                >
+                <textarea id="edit-post-body" class="w-100 rounded"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="edit-post-image" class="col-form-label"
+                  >Image :</label
+                >
+                <input type="file" class="form-control" id="edit-post-image" />
+                <input type="hidden" class="form-control" id="edit-post-id" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="updatePost()"
+            >
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END EDIT POST MODAL -->
+
     <!-- START CONTAINER  -->
     <div class="container">
       <div class="d-flex justify-content-center">
-        <div class="col-12 col-md-8" id="post-content"></div>
-        <div class="spinner-border text-light" role="status"></div>
+        <div class="col-12 col-md-8">
+          <h3 class="text-white mt-5 mb-4">Profile</h3>
+          <div class="bg-secondary p-3 rounded row text-white">
+            <div class="col-3 d-flex justify-content-center align-items-center">
+              <img
+                src="./images/profile.png"
+                id="user-profile-img"
+                class="rounded-pill border"
+                alt="profile"
+                style="width: 7rem; height: 7rem; object-fit: fill"
+              />
+            </div>
+            <div
+              class="col-6 d-flex justify-content-center align-items-start flex-column"
+            >
+              <p id="name">Name:</p>
+              <p id="user-name">User Name:</p>
+            </div>
+            <div
+              class="col-3 d-flex justify-content-center align-items-start flex-column"
+            >
+              <p>
+                <span class="fs-2 text-warning user-posts-count">0</span> Posts
+              </p>
+              <p>
+                <span class="fs-2 text-warning user-comments-count">0</span>
+                Comments
+              </p>
+            </div>
+          </div>
+          <h3 class="text-white mt-4" id="user-name-posts">User Posts</h3>
+          <div id="user-posts"></div>
+        </div>
       </div>
     </div>
 
     <!-- END CONTAINER  -->
 
+    <!-- START ADD POST BUTTON  -->
+    <button
+      class="text-center"
+      data-bs-toggle="modal"
+      data-bs-target="#add-post-modal"
+      id="add-post"
+    >
+      +
+    </button>
+    <!-- END ADD POST BUTTON  -->
+
     <!-- START ALERTS -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
     <!-- END ALERTS -->
-    <script src="postdetails.js"></script>
+    <script src="main.js"></script>
+    <script src="profile.js"></script>
   </body>
 </html>
