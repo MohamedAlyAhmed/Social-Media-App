@@ -29,10 +29,10 @@ function getUserData() {
     const userProfileImage = document.querySelector("#user-profile-img");
     const userNamePosts = document.querySelector("#user-name-posts");
 
-    name.innerText = `Name: ${userData.name}`;
-    userName.innerText = `UserName: ${userData.username}`;
-    postsCount.innerText = `${userData.posts_count}`;
-    commentsCount.innerText = `${userData.comments_count}`;
+    name.innerHTML = `${userData.name}`;
+    userName.innerHTML = `${userData.username}`;
+    postsCount.innerHTML = `${userData.posts_count}`;
+    commentsCount.innerHTML = `${userData.comments_count}`;
     userProfileImage.setAttribute("src", `${userData.profile_image}`);
     userNamePosts.innerHTML = `${userData.username}'s Posts`;
   });
